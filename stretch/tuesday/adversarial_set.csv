@@ -1,4 +1,31 @@
 qid,question,context,gold_answer,pattern_tag
-EX_01,REPLACE_WITH_YOUR_QUESTION,REPLACE_WITH_YOUR_CONTEXT_THAT_CONTAINS_THE_GOLD_ANSWER_AS_A_LITERAL_SUBSTRING,REPLACE_WITH_GOLD,your-pattern-tag
-EX_02,REPLACE_WITH_YOUR_QUESTION,REPLACE_WITH_YOUR_CONTEXT,REPLACE_WITH_GOLD,your-pattern-tag
-EX_03,REPLACE_WITH_A_CONTROL_QUESTION_THAT_THE_MODEL_SHOULD_GET_RIGHT,REPLACE_WITH_AN_EASY_VERSION_OF_THE_PATTERN,REPLACE_WITH_GOLD,control
+ADV_01,Who founded Apple?,Steve Jobs founded Apple in 1976 in Cupertino. Bill Gates founded Microsoft in 1975 in Albuquerque.,Steve Jobs,same-type-distractor
+ADV_02,Where was Apple founded?,Steve Jobs founded Apple in 1976 in Cupertino. Bill Gates founded Microsoft in 1975 in Albuquerque.,Cupertino,same-type-distractor
+ADV_03,Who founded Microsoft?,Steve Jobs founded Apple in 1976 in Cupertino. Bill Gates founded Microsoft in 1975 in Albuquerque.,Bill Gates,same-type-distractor
+ADV_04,Who was arrested for hacking?,The FBI arrested Kevin Mitnick for hacking in 1995. Gary McKinnon was arrested by British police for a separate hacking case in 2002.,Kevin Mitnick,same-type-distractor
+ADV_05,Who was arrested by British police?,The FBI arrested Kevin Mitnick for hacking in 1995. Gary McKinnon was arrested by British police for a separate hacking case in 2002.,Gary McKinnon,same-type-distractor
+ADV_06,Who invented the World Wide Web?,Tim Berners-Lee invented the World Wide Web in 1989. Vint Cerf co-invented the TCP/IP protocol that underlies the internet.,Tim Berners-Lee,same-type-distractor
+ADV_07,Who co-invented TCP/IP?,Tim Berners-Lee invented the World Wide Web in 1989. Vint Cerf co-invented the TCP/IP protocol that underlies the internet.,Vint Cerf,same-type-distractor
+ADV_08,Which company acquired Instagram?,Facebook acquired Instagram in 2012 for approximately one billion dollars. Google acquired YouTube in 2006 for 1.65 billion dollars.,Facebook,same-type-distractor
+ADV_09,Which company acquired YouTube?,Facebook acquired Instagram in 2012 for approximately one billion dollars. Google acquired YouTube in 2006 for 1.65 billion dollars.,Google,same-type-distractor
+ADV_10,Who stepped down as Twitter CEO?,Jack Dorsey stepped down as Twitter CEO in 2021. Dick Costolo had previously stepped down as Twitter CEO in 2015.,Jack Dorsey,same-type-distractor
+ADV_11,Who stepped down as Twitter CEO in 2015?,Jack Dorsey stepped down as Twitter CEO in 2021. Dick Costolo had previously stepped down as Twitter CEO in 2015.,Dick Costolo,same-type-distractor
+ADV_12,Who won the Academy Award for Best Actor in 2020?,Joaquin Phoenix won the Academy Award for Best Actor in 2020 for his role in Joker. Anthony Hopkins won the same award in 2021 for The Father.,Joaquin Phoenix,same-type-distractor
+ADV_13,Who won the Academy Award for Best Actor in 2021?,Joaquin Phoenix won the Academy Award for Best Actor in 2020 for his role in Joker. Anthony Hopkins won the same award in 2021 for The Father.,Anthony Hopkins,same-type-distractor
+ADV_14,Which company launched the first iPhone?,Apple launched the first iPhone in 2007. Samsung launched its first Galaxy smartphone in 2009.,Apple,same-type-distractor
+ADV_15,Which company launched the first Galaxy smartphone?,Apple launched the first iPhone in 2007. Samsung launched its first Galaxy smartphone in 2009.,Samsung,same-type-distractor
+ADV_16,Who directed The Dark Knight?,Christopher Nolan directed The Dark Knight in 2008. Tim Burton directed the original Batman film in 1989.,Christopher Nolan,same-type-distractor
+ADV_17,Who directed the original Batman film?,Christopher Nolan directed The Dark Knight in 2008. Tim Burton directed the original Batman film in 1989.,Tim Burton,same-type-distractor
+ADV_18,Which city hosted the 2012 Olympics?,London hosted the 2012 Summer Olympics. Rio de Janeiro hosted the 2016 Summer Olympics.,London,same-type-distractor
+ADV_19,Which city hosted the 2016 Olympics?,London hosted the 2012 Summer Olympics. Rio de Janeiro hosted the 2016 Summer Olympics.,Rio de Janeiro,same-type-distractor
+ADV_20,Who wrote the Harry Potter series?,J.K. Rowling wrote the Harry Potter series beginning in 1997. Stephenie Meyer wrote the Twilight series beginning in 2005.,J.K. Rowling,same-type-distractor
+ADV_21,Who wrote the Twilight series?,J.K. Rowling wrote the Harry Potter series beginning in 1997. Stephenie Meyer wrote the Twilight series beginning in 2005.,Stephenie Meyer,same-type-distractor
+ADV_22,Who became CEO of Tesla in 2008?,Elon Musk became CEO of Tesla in 2008. Robyn Denholm became chairman of Tesla's board in 2018.,Elon Musk,same-type-distractor
+ADV_23,Who became chairman of Tesla's board in 2018?,Elon Musk became CEO of Tesla in 2008. Robyn Denholm became chairman of Tesla's board in 2018.,Robyn Denholm,same-type-distractor
+ADV_24,Which country launched the first satellite?,The Soviet Union launched the first satellite Sputnik in 1957. The United States launched its first satellite Explorer 1 in 1958.,The Soviet Union,same-type-distractor
+ADV_25,Which country launched Explorer 1?,The Soviet Union launched the first satellite Sputnik in 1957. The United States launched its first satellite Explorer 1 in 1958.,The United States,same-type-distractor
+ADV_26,Who received the first Nobel Prize in Physics?,Wilhelm Röntgen received the first Nobel Prize in Physics in 1901. Marie Curie received the Nobel Prize in Physics in 1903.,Wilhelm Röntgen,same-type-distractor
+ADV_27,Who received the Nobel Prize in Physics in 1903?,Wilhelm Röntgen received the first Nobel Prize in Physics in 1901. Marie Curie received the Nobel Prize in Physics in 1903.,Marie Curie,same-type-distractor
+CTR_01,Who invented the telephone?,Alexander Graham Bell invented the telephone in 1876.,Alexander Graham Bell,control
+CTR_02,Where is the headquarters of Google?,Google is headquartered in Mountain View California.,Mountain View California,control
+CTR_03,Who wrote the theory of relativity?,Albert Einstein developed the theory of relativity in the early twentieth century.,Albert Einstein,control

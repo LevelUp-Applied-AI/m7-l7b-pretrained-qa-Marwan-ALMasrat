@@ -1,0 +1,32 @@
+qid,question,context_excerpt,gold_answer,predicted_answer,em,f1,pattern_tag
+ADV_01,Who reported the suspect was last seen near the airport?,Detective Morgan reported the suspect was last seen near the airport. Officer Ha,Detective Morgan,Detective Morgan,1,1.0,same-type-distractor
+ADV_02,Who confirmed the suspect had been spotted downtown?,Detective Morgan reported the suspect was last seen near the airport. Officer Ha,Officer Hayes,Officer Hayes,1,1.0,same-type-distractor
+ADV_03,Who announced the company would cut 3000 jobs?,CEO Patricia Lawson announced the company would cut 3000 jobs following poor qua,Patricia Lawson,Patricia Lawson,1,1.0,same-type-distractor
+ADV_04,Who said the losses were manageable?,CEO Patricia Lawson announced the company would cut 3000 jobs following poor qua,David Chen,David Chen,1,1.0,same-type-distractor
+ADV_05,Who warned that the bridge was unsafe?,City Engineer Sandra Mills warned that the bridge was unsafe and required immedi,Sandra Mills,Sandra Mills,1,1.0,same-type-distractor
+ADV_06,Who insisted the bridge had passed inspections?,City Engineer Sandra Mills warned that the bridge was unsafe and required immedi,Tom Briggs,Mayor Tom Briggs,0,0.8,same-type-distractor
+ADV_07,Who filed the lawsuit against the pharmaceutical company?,Patient advocate Laura Jensen filed the lawsuit against the pharmaceutical compa,Laura Jensen,Laura Jensen,1,1.0,same-type-distractor
+ADV_08,Who argued the claims lacked evidence?,Patient advocate Laura Jensen filed the lawsuit against the pharmaceutical compa,Mark Holloway,Mark Holloway,1,1.0,same-type-distractor
+ADV_09,Who discovered the security vulnerability in the banking software?,Security researcher Amir Hasan discovered the security vulnerability in the bank,Amir Hasan,Amir Hasan,1,1.0,same-type-distractor
+ADV_10,Who denied that customer data had been compromised?,Security researcher Amir Hasan discovered the security vulnerability in the bank,Rachel Ford,Rachel Ford,1,1.0,same-type-distractor
+ADV_11,Who testified that the defendant was at the scene?,Eyewitness Carol Simmons testified that the defendant was at the scene at the ti,Carol Simmons,Carol Simmons,1,1.0,same-type-distractor
+ADV_12,Who claimed the defendant was at a restaurant?,Eyewitness Carol Simmons testified that the defendant was at the scene at the ti,Brian Cho,Brian Cho,1,1.0,same-type-distractor
+ADV_13,Who warned residents to evacuate before the hurricane?,Governor Elena Vasquez warned residents to evacuate before the hurricane made la,Elena Vasquez,Governor Elena Vasquez,0,0.8,same-type-distractor
+ADV_14,Who said shelters had been opened?,Governor Elena Vasquez warned residents to evacuate before the hurricane made la,Frank Okafor,Frank Okafor,1,1.0,same-type-distractor
+ADV_15,Who accused the senator of accepting illegal donations?,Investigative journalist Nina Park accused the senator of accepting illegal dona,Nina Park,Nina Park,1,1.0,same-type-distractor
+ADV_16,Who dismissed the allegations as politically motivated?,Investigative journalist Nina Park accused the senator of accepting illegal dona,Robert Ellis,Robert Ellis,1,1.0,same-type-distractor
+ADV_17,Who claimed the new drug reduced cancer risk by forty percent?,Lead researcher Dr. Amara Osei claimed the new drug reduced cancer risk by forty,Dr. Amara Osei,Dr. Amara Osei,1,1.0,same-type-distractor
+ADV_18,Who questioned the methodology of the study?,Lead researcher Dr. Amara Osei claimed the new drug reduced cancer risk by forty,Dr. James Whitfield,Dr. James Whitfield,1,1.0,same-type-distractor
+ADV_19,Who proposed the new education reform bill?,Senator Diana Cho proposed the new education reform bill aimed at reducing class,Diana Cho,Senator Diana Cho,0,0.8,same-type-distractor
+ADV_20,Who opposed the education reform bill?,Senator Diana Cho proposed the new education reform bill aimed at reducing class,Paul Nguyen,Paul Nguyen,1,1.0,same-type-distractor
+ADV_21,Who confirmed the satellite had successfully entered orbit?,NASA Flight Director Marcus Webb confirmed the satellite had successfully entere,Marcus Webb,NASA Flight Director Marcus Webb,0,0.5714285714285715,same-type-distractor
+ADV_22,Who said the team was relieved after weeks of preparation?,NASA Flight Director Marcus Webb confirmed the satellite had successfully entere,Dr. Leila Torres,Mission Specialist Dr. Leila Torres,0,0.7499999999999999,same-type-distractor
+ADV_23,Who admitted the factory had been violating emissions standards?,Plant Manager George Hartley admitted the factory had been violating emissions s,George Hartley,Plant Manager George Hartley,0,0.6666666666666666,same-type-distractor
+ADV_24,Who said fines would be issued immediately?,Plant Manager George Hartley admitted the factory had been violating emissions s,Clara Moody,Environmental Inspector Clara Moody,0,0.6666666666666666,same-type-distractor
+ADV_25,Who revealed that the merger would eliminate five hundred positions?,Union Representative James Forde revealed that the merger would eliminate five h,James Forde,James Forde,1,1.0,same-type-distractor
+ADV_26,Who assured employees that severance packages would be offered?,Union Representative James Forde revealed that the merger would eliminate five h,Susan Blake,HR Director Susan Blake,0,0.6666666666666666,same-type-distractor
+ADV_27,Who reported that food contamination had affected twelve schools?,Health Inspector Daniel Cruz reported that food contamination had affected twelv,Daniel Cruz,Health Inspector Daniel Cruz,0,0.6666666666666666,same-type-distractor
+ADV_28,Who promised an immediate investigation would be launched?,Health Inspector Daniel Cruz reported that food contamination had affected twelv,Michelle Grant,Michelle Grant,1,1.0,same-type-distractor
+CTR_01,Who invented the telephone?,Alexander Graham Bell invented the telephone in 1876.,Alexander Graham Bell,Alexander Graham Bell,1,1.0,control
+CTR_02,What did Einstein develop?,Albert Einstein developed the theory of relativity.,the theory of relativity,the theory of relativity,1,1.0,control
+CTR_03,Where is the Eiffel Tower located?,The Eiffel Tower is located in Paris France.,Paris France,Paris France,1,1.0,control
