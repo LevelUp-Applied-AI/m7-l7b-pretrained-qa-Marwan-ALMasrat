@@ -32,6 +32,10 @@ def load_adversarial_set(path: str = os.path.join(BASE_DIR, "adversarial_set.csv
 
 
 def evaluate_adversarial(qa, df: pd.DataFrame) -> dict:
+    """
+    Run the QA pipeline over the adversarial set and return aggregate and
+    per_pattern breakdown of EM and F1 scores.
+    """
     tag_lookup = dict(zip(df["qid"], df["pattern_tag"]))
     aggregate = lab.evaluate_qa(qa, df)
     for pred in aggregate["predictions"]:
