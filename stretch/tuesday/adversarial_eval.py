@@ -14,13 +14,20 @@ import pandas as pd
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
 import lab  # noqa: E402
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-def load_adversarial_set(path: str = "adversarial_set.csv") -> pd.DataFrame:
+
+def load_adversarial_set(path: str = os.path.join(BASE_DIR, "adversarial_set.csv")) -> pd.DataFrame:
     required_columns = {"qid", "question", "context", "gold_answer", "pattern_tag"}
     df = pd.read_csv(path)
     missing = required_columns - set(df.columns)
     if missing:
         raise ValueError(f"adversarial_set.csv is missing required columns: {missing}")
+
+    bad = df[~df.apply(lambda r: r["gold_answer"] in r["context"], axis=1)]
+    if not bad.empty:
+        raise ValueError(f"gold_answer not in context for qids: {bad['qid'].tolist()}")
+
     return df
 
 
@@ -58,8 +65,10 @@ def main() -> None:
     df = load_adversarial_set()
     qa = lab.build_qa_pipeline(lab.get_qa_model_name())
     result = evaluate_adversarial(qa, df)
+
     pred_df = pd.DataFrame(result["predictions"])
-    pred_df.to_csv("adversarial_predictions.csv", index=False)
+    pred_df.to_csv(os.path.join(BASE_DIR, "adversarial_predictions.csv"), index=False)
+
     metrics = {
         "em":          result["em"],
         "f1":          result["f1"],
@@ -67,8 +76,9 @@ def main() -> None:
         "per_pattern": result["per_pattern"],
         "model":       lab.get_qa_model_name(),
     }
-    with open("adversarial_metrics.json", "w") as f:
+    with open(os.path.join(BASE_DIR, "adversarial_metrics.json"), "w") as f:
         json.dump(metrics, f, indent=2)
+
     print(f"Aggregate EM = {result['em']:.4f}")
     print(f"Aggregate F1 = {result['f1']:.4f}")
     print(f"n = {result['n']}")

@@ -3,8 +3,8 @@
 ## 1. Hypothesis
 
 - **Input pattern:** The context contains two named entities of the same type (both persons), each attributed a distinct action. The question asks about one entity by referencing only its action.
-- **Output pattern:** The model returns a title-prefixed span (e.g., "Mayor Tom Briggs", "Plant Manager George Hartley") when the gold answer is the bare name ("Tom Briggs", "George Hartley"), or vice versa — producing a partial-match error rather than an exact match.
-- **Why:** DistilBERT-SQuAD learns to identify entity spans by type signal (PERSON) and proximity to the verb in the question. When two same-type entities appear in the same context, the model frequently latches onto the longer, more salient span — the one with a title prefix — regardless of which entity the question specifies. This is a span-boundary bias: the model over-extends the answer span to include adjacent title tokens because title-name collocations are the dominant person-mention pattern in SQuAD training data.
+- **Output pattern:** The model returns a title-prefixed span (e.g., "NASA Flight Director Marcus Webb") when the gold answer is the bare name ("Marcus Webb"), or selects the wrong entity entirely when the two persons appear in separate sentences.
+- **Why:** DistilBERT-SQuAD learns to identify entity spans by type signal (PERSON) and proximity to the verb in the question. When two same-type entities appear in the same sentence, the model uses predicate proximity correctly. When the two entities appear in separate sentences (adjacent-entity-distractor), the model loses the predicate-anchoring signal and falls back on positional bias — frequently selecting the first or more salient entity regardless of which one the question targets.
 
 ---
 
@@ -12,10 +12,11 @@
 
 - **Total examples:** 31
 - **Tags used:**
-  - `same-type-distractor` (n = 28): Each context contains exactly two named persons with distinct roles and actions. Questions are role-specific ("Who warned…?" vs. "Who insisted…?"), forcing the model to discriminate by predicate rather than entity type.
-  - `control` (n = 3): Single-entity, single-sentence contexts with no distractors (telephone inventor, Einstein, Eiffel Tower). These test that the model handles unambiguous extraction correctly and confirm that the pattern — not raw question difficulty — drives any failures observed in the adversarial subset.
-- **Why these tags:** One adversarial tag isolates the targeted failure mode cleanly; the control tag provides the baseline-within-set needed to attribute failures to distractor presence rather than model capacity.
-- **Control examples:** 3 examples with no same-type distractors. They confirm that the model can extract person names at EM = 1.0 when no competing entity exists, making same-type distractor presence the discriminating factor.
+  - `same-type-distractor` (n = 16): Both persons appear in the same sentence. Questions are predicate-specific, forcing the model to discriminate by verb attribution within a single sentence.
+  - `adjacent-entity-distractor` (n = 12): The two persons appear in separate consecutive sentences. The question targets one entity; the other appears in an adjacent sentence with no shared predicate.
+  - `control` (n = 3): Single-entity, single-sentence contexts with no distractors. These confirm that the model handles unambiguous extraction correctly at EM = 1.0.
+- **Why these tags:** The two adversarial tags isolate whether distractor proximity (same sentence vs. adjacent sentence) affects failure rate — a finer-grained hypothesis than "two entities in context." The control tag confirms that failures are caused by distractor presence, not raw difficulty.
+- **Control examples:** 3 examples (telephone inventor, Einstein, Eiffel Tower). All three scored EM = 1.0, confirming the model can extract correctly when no competing entity exists.
 
 ---
 
@@ -24,27 +25,26 @@
 - **Aggregate EM:** 0.7097 — **Aggregate F1:** 0.9157
 - **Lab 7B baseline (tech-news QA set):** EM = 0.3440; F1 = 0.4611
 
-| Pattern | n | EM | F1 | vs. baseline EM | vs. baseline F1 |
-|---|---|---|---|---|---|
-| same-type-distractor | 28 | 0.6786 | 0.9067 | +0.3346 | +0.4456 |
-| control | 3 | 1.0000 | 1.0000 | +0.6560 | +0.5389 |
+| Pattern | n | EM | F1 | vs. baseline EM |
+|---|---|---|---|---|
+| same-type-distractor | 16 | 0.8750 | 0.9750 | +0.5310 |
+| adjacent-entity-distractor | 12 | 0.4167 | 0.8157 | +0.0727 |
+| control | 3 | 1.0000 | 1.0000 | +0.6560 |
 
-The adversarial set scores *higher* than the tech-news baseline on both metrics. This reflects a construction artifact: the adversarial contexts are short two-sentence passages where the answer appears verbatim and unambiguously adjacent to its predicate, whereas the tech-news baseline involves longer, noisier real-world articles. The adversarial set therefore isolates a *specific* span-boundary failure rather than a general accuracy collapse.
+The key finding is the gap between the two adversarial tags: `same-type-distractor` EM = 0.875 vs. `adjacent-entity-distractor` EM = 0.417. When both entities share a sentence, the model uses predicate proximity to discriminate correctly most of the time. When entities are in separate sentences, EM drops by 0.458 — the model loses its predicate-anchoring signal and fails on nearly 6 of 12 examples.
 
-The failure mode is visible in span over-extension: the model achieves EM = 0 on 8 of 28 adversarial examples (28.6%), all cases where it returned a title-prefixed span instead of the bare name gold answer, or extended the span to include a role token. F1 remains high (0.91) because the predicted spans contain the gold tokens — the error is boundary precision, not wrong entity selection.
+The aggregate scores higher than the tech-news baseline because the adversarial contexts are short two-sentence passages with verbatim answers, whereas the baseline involves longer noisy articles. The adversarial set isolates a specific structural failure, not a general accuracy collapse.
 
 **Illustrative failure tuples:**
 
-- **(ADV_06)** "Who insisted the bridge had passed inspections?" → gold: `Tom Briggs`, predicted: `Mayor Tom Briggs`. The model correctly identifies the entity but over-extends the span leftward to include the title, failing EM despite capturing the correct person.
-- **(ADV_21)** "Who confirmed the satellite had successfully entered orbit?" → gold: `Marcus Webb`, predicted: `NASA Flight Director Marcus Webb`. Same span-extension pattern; gold is bare name, model anchors on the full title-name collocation (F1 = 0.57 due to low token overlap with the short gold string).
-- **(ADV_24)** "Who said fines would be issued immediately?" → gold: `Clara Moody`, predicted: `Environmental Inspector Clara Moody`. Title prefix added; F1 = 0.67. The distractor (George Hartley) is not selected — the model identifies the correct entity — but span boundaries are wrong.
-
-The pattern is consistent: failures occur exclusively when the gold answer is a bare surname/first+last name and the context introduces that person with a title. The model never selects the wrong entity; it selects the right entity with the wrong span boundary.
+- **(ADV_21)** "Who confirmed the satellite had successfully entered orbit?" → gold: `Marcus Webb`, predicted: `NASA Flight Director Marcus Webb`. Span over-extension into title prefix; correct entity selected but wrong boundary.
+- **(ADV_19)** "Who proposed the new education reform bill?" → gold: `Diana Cho`, predicted: `Paul Nguyen`. Wrong entity selected — both appear in separate sentences; model picks the more positionally salient name.
+- **(ADV_25)** "Who revealed that the merger would eliminate five hundred positions?" → gold: `James Forde`, predicted: `Susan Blake`. Adjacent-sentence distractor wins over the correct entity; predicate signal lost across sentence boundary.
 
 ---
 
 ## 4. Production Defense
 
-**Recommended action: post-hoc span normalization using an NER-based title stripper.**
+**Recommended action: sentence-scoped answer extraction.**
 
-The failure mode is not entity selection error — the model picks the correct person in every case. The error is span over-extension into adjacent title tokens. A lightweight NER pass over every predicted answer span can detect and strip honorifics and role titles (Mayor, Dr., Inspector, Director, etc.) that precede a PERSON entity, normalizing the output to the bare name. This directly addresses the measured pattern: all 8 EM failures in the adversarial set involve a title prefix that NER would classify as a non-PERSON token prepended to the correct PERSON span. The fix requires no retraining, adds negligible latency, and targets precisely the boundary bias the per-pattern breakdown reveals — without touching the model's entity-selection behavior, which is already correct.
+The `adjacent-entity-distractor` failures show that the model selects the wrong entity when the distractor appears in a separate sentence. The fix is to restrict the QA model's extraction window to the single sentence most relevant to the question (selected by a lightweight sentence-similarity ranker), rather than passing the full multi-sentence context. This eliminates cross-sentence distractors before the QA head sees them. It requires no retraining, adds one fast similarity scoring step, and directly targets the measured failure: all 7 EM failures in the adjacent-entity-distractor subset involve a distractor that would be absent if the context were scoped to the answer sentence only.

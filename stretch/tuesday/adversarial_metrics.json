@@ -4,9 +4,14 @@
   "n": 31,
   "per_pattern": {
     "same-type-distractor": {
-      "em": 0.6786,
-      "f1": 0.9067,
-      "n": 28
+      "em": 0.875,
+      "f1": 0.975,
+      "n": 16
+    },
+    "adjacent-entity-distractor": {
+      "em": 0.4167,
+      "f1": 0.8157,
+      "n": 12
     },
     "control": {
       "em": 1.0,
