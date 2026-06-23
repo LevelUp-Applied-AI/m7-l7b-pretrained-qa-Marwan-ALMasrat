@@ -1,0 +1,23 @@
+{
+  "em": 0.7096774193548387,
+  "f1": 0.9157450076804916,
+  "n": 31,
+  "per_pattern": {
+    "same-type-distractor": {
+      "em": 0.875,
+      "f1": 0.975,
+      "n": 16
+    },
+    "adjacent-entity-distractor": {
+      "em": 0.4167,
+      "f1": 0.8157,
+      "n": 12
+    },
+    "control": {
+      "em": 1.0,
+      "f1": 1.0,
+      "n": 3
+    }
+  },
+  "model": "distilbert-base-cased-distilled-squad"
+}
